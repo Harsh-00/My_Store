@@ -1,5 +1,6 @@
 from redis_om import HashModel
 from database import redis
+from typing import Optional
 
 class ProductOrder(HashModel):
     product_id: str
@@ -14,6 +15,7 @@ class Order(HashModel):
     total: float
     quantity: int
     status: str
+    created_at: Optional[str]=None
     class Meta:
         database= redis
  

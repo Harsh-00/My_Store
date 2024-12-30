@@ -7,13 +7,13 @@ import os
 from fastapi.background import BackgroundTasks
 from database import redis
 import time  
+from datetime import datetime
 
 app=FastAPI() 
 load_dotenv()
 warehouse_url=os.getenv("WAREHOUSE_URL")
 
-
-origins = ["http://localhost:3000"]
+origins = [f'{os.getenv("FRONT_URL")}'] 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -29,16 +29,16 @@ def read_root():
 @app.post("/orders")
 def create_order(productOrder: ProductOrder,background_tasks: BackgroundTasks):
     req=requests.get(f'{warehouse_url}/product/{productOrder.product_id}')
-    product=req.json()
-    fee=product['price']*0.2
+    product=req.json() 
 
     order=Order(
         product_id=productOrder.product_id,
         price=product['price'],
-        fee=fee,
-        total=product['price']+fee,
+        fee=round(product['price']*productOrder.quantity *0.1, 2),
+        total=round(product['price']*productOrder.quantity*1.1, 2),
         quantity=productOrder.quantity,
-        status="pending"
+        status="pending",
+        created_at= datetime.utcnow().isoformat()
     )
 
     order.save()
@@ -64,6 +64,12 @@ def detailed_order(pk):
 @app.get("/orders/{pk}")
 def get_order(pk: str): 
     return Order.get(pk)
+
+@app.delete("/orders/delete")
+def delete_orders():
+    for pk in Order.all_pks():
+        Order.delete(pk)
+    return {"message":"All orders deleted"}
 
 
 
