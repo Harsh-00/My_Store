@@ -5,7 +5,8 @@ import requests
 from dotenv import load_dotenv
 import os
 from fastapi.background import BackgroundTasks
-import time
+from database import redis
+import time  
 
 app=FastAPI() 
 load_dotenv()
@@ -47,7 +48,9 @@ def create_order(productOrder: ProductOrder,background_tasks: BackgroundTasks):
 def update_order_status(order: Order):
     time.sleep(4)
     order.status="completed"
-    order.save()
+    order.save() 
+    redis.xadd(name="order-completed",fields=order.dict())
+    
 
 
 @app.get("/orders/all")
