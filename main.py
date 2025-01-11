@@ -19,7 +19,7 @@ warehouse_url=os.getenv("WAREHOUSE_URL")
 
 app=FastAPI() 
 
-origins = [f'{os.getenv("FRONT_URL")}']  
+origins = [f'{os.getenv("FRONT_URL")}',"http://localhost:5173"] 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
