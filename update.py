@@ -24,9 +24,9 @@ while True:
                 obj=res[1][0][1] 
                 order=Order.get(obj["pk"])
                 order.status="refunded"
+                order.message="Not enough stock"
                     
                 order.save()
-                print(order.dict())
     except Exception as e:
         print(str(e))
     time.sleep(3)

@@ -50,6 +50,7 @@ def create_order(productOrder: ProductOrder,background_tasks: BackgroundTasks):
             total=round(product['price']*productOrder.quantity*1.1, 2),
             quantity=productOrder.quantity,
             status="pending",
+            message="---",
             created_at= datetime.utcnow().isoformat()
         )
 
