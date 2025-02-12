@@ -6,9 +6,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8001
 
 # Define environment variables
-ENV REDIS_ENDPOINT="redis-19682.c264.ap-south-1-1.ec2.redns.redis-cloud.com"
-ENV REDIS_PORT="19682"
-ENV REDIS_PASSWORD="jxYGVMOv0eQoDhrobmJL178gSFSMnFQ6"
+ENV REDIS_ENDPOINT="redis-14982.c301.ap-south-1-1.ec2.redns.redis-cloud.com"
+ENV REDIS_PORT="14982"
+ENV REDIS_PASSWORD="QcwPbszKlwtfThOCDKEK3NvJljlDOQd8"
 ENV FRONT_URL="https://general-inventory.vercel.app"
 ENV WAREHOUSE_URL="http://product_service:8000"
 
