@@ -16,6 +16,7 @@ class Order(HashModel):
     total: float = Field(...,ge=0)
     quantity: int = Field(...,gt=0)
     status: str
+    message: Optional[str]=None
     created_at: Optional[str]=None
     class Meta:
         database= redis
